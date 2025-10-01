@@ -4,7 +4,7 @@ const sql = require("mssql");
 
 const dbconfig = require("./dbconfig");
 const userRouter = require("./routes/main");
-//const schedule = require("node-schedule"); changes in .env
+//const schedule = require("node-schedule");
 
 const app = express();
 app.use(bodyParser.json());
