@@ -136,6 +136,23 @@ exports.booking = async (req, res, next) => {
     throw err;
   }
 };
+exports.topup = async (req, res, next) => {
+  const publicKey = req.body.publicKey;
+  const amt = req.body.amt;
+  const txn = req.body.txn;
+  const mode = req.body.mode;
+  try {
+    const result = await new sql.Request()
+      .input("publicKey", publicKey)
+      .input("amt", amt)
+      .input("txn", txn)
+      .input("mode", mode)
+      .execute("SP_Topup");
+    res.status(200).json({ data: result.recordset });
+  } catch (err) {
+    throw err;
+  }
+};
 // exports.fcmToken = async (req, res, next) => {
 //   const publicKey = req.body.publicKey;
 //   const token = req.body.token;
