@@ -6,6 +6,19 @@ require("dotenv").config();
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
+const { ethers } = require("ethers");
+
+const USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955";
+const ERC20_ABI = [
+  "function transfer(address to, uint256 amount) returns (bool)",
+];
+
+// Setup provider & wallet
+const provider = new ethers.JsonRpcProvider(
+  "https://bsc-dataseed.binance.org/"
+);
+const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+const usdt = new ethers.Contract(USDT_ADDRESS, ERC20_ABI, wallet);
 
 // const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 // admin.initializeApp({
@@ -55,6 +68,26 @@ exports.signup = async (req, res, next) => {
     }
   } catch (err) {
     throw err;
+  }
+};
+exports.withdrawUsdt = async (req, res, next) => {
+  try {
+    const { to, amount } = req.body; // amount in USDT
+    if (!to || !amount) {
+      return res.status(400).json({ msg: "Missing parameters" });
+    }
+
+    // Convert to 18 decimals (USDT on BSC uses 18)
+    const value = ethers.parseUnits(amount.toString(), 18);
+
+    // Send transaction
+    const tx = await usdt.transfer(to, value);
+    await tx.wait();
+
+    res.json({ msg: "success", txHash: tx.hash });
+  } catch (err) {
+    console.error("Withdraw error:", err);
+    res.status(500).json({ msg: err.message });
   }
 };
 // exports.changePassword = async (req, res, next) => {

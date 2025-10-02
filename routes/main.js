@@ -28,6 +28,7 @@ router.post("/signup", userController.signup);
 // router.post("/getDailyTips", userController.changePassword);
 router.post("/booking", userController.booking);
 router.post("/topup", userController.topup);
+router.post("/withdrawUsdt", userController.withdrawUsdt);
 // router.post("/fcmToken", userController.fcmToken);
 // router.post("/sendfcmMsg", userController.sendfcmMsg);
 // router.post("/sendTips", userController.sendTips);
