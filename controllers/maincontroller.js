@@ -84,7 +84,7 @@ exports.withdrawUsdt = async (req, res, next) => {
     const tx = await usdt.transfer(to, value);
     await tx.wait();
 
-    res.json({ msg: "success", txHash: tx.hash });
+    res.status(200).json({ msg: "success", txHash: tx.hash });
   } catch (err) {
     console.error("Withdraw error:", err);
     res.status(500).json({ msg: err.message });
