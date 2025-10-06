@@ -13,10 +13,10 @@ router.get(
 // router.get("/getTips/:publicKey", userController.getTips);
 // router.get("/getRewardTips/:publicKey", userController.getRewardTips);
 // router.get("/getDailyRewardList/:publicKey", userController.getDailyRewardList);
-// router.get(
-//   "/getDashboardBalance/:publicKey",
-//   userController.getDashboardBalance
-// );
+router.get(
+  "/getDashboardBalance/:publicKey",
+  userController.getDashboardBalance
+);
 router.get("/getMyPackages/:phrases", userController.getMyPackages);
 // router.get("/getDirect/:uid", userController.getDirect);
 // router.get("/getWithdrawal_check/:withSl", userController.getWithdrawal_check);
