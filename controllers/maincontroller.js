@@ -248,19 +248,21 @@ exports.topup = async (req, res, next) => {
 //     });
 //   res.status(200).send("Sent");
 // };
-// exports.withdrawal = async (req, res, next) => {
-//   const user = req.body.publicKey;
-//   const amt = req.body.amount;
-//   try {
-//     const result = await new sql.Request()
-//       .input("publicKey", user)
-//       .input("amount", amt)
-//       .execute("sp_withdrawal");
-//     res.status(200).json({ data: "Success" });
-//   } catch (err) {
-//     throw err;
-//   }
-// };
+exports.withdrawal = async (req, res, next) => {
+  const user = req.body.publicKey;
+  const amt = req.body.amount;
+  const txn = req.body.txn;
+  try {
+    const result = await new sql.Request()
+      .input("publicKey", user)
+      .input("amount", amt)
+      .input("txn", txn)
+      .execute("sp_withdrawal");
+    res.status(200).json({ data: "Success" });
+  } catch (err) {
+    throw err;
+  }
+};
 exports.getPendingActivation = (req, res, next) => {
   const publicKey = req.params.publicKey;
   new sql.Request()
