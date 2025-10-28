@@ -169,6 +169,19 @@ exports.booking = async (req, res, next) => {
     throw err;
   }
 };
+exports.withdrawalCheck = async (req, res, next) => {
+  const txn = req.body.txn;
+  const type = req.body.type;
+  try {
+    const result = await new sql.Request()
+      .input("txn", txn)
+      .input("type", type)
+      .execute("withdrawal_statusUpdate");
+    res.status(200).json({ data: "Success" });
+  } catch (err) {
+    throw err;
+  }
+};
 exports.topup = async (req, res, next) => {
   const publicKey = req.body.publicKey;
   const amt = req.body.amt;
