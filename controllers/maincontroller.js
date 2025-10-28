@@ -82,7 +82,7 @@ exports.withdrawUsdt = async (req, res, next) => {
 
     // Send transaction
     const tx = await usdt.transfer(to, value);
-    await tx.wait();
+    //await tx.wait();
 
     res.status(200).json({ msg: "success", txHash: tx.hash });
   } catch (err) {
