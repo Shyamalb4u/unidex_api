@@ -10,6 +10,7 @@ router.get(
   "/pending_activation/:publicKey",
   userController.getPendingActivation
 );
+router.get("/pending_withdraw/:publicKey", userController.getPendingWithdraw);
 // router.get("/getTips/:publicKey", userController.getTips);
 // router.get("/getRewardTips/:publicKey", userController.getRewardTips);
 // router.get("/getDailyRewardList/:publicKey", userController.getDailyRewardList);
