@@ -97,12 +97,10 @@ exports.withdrawUsdt = async (req, res, next) => {
     }
     console.error("Withdraw error:", err);
     //res.status(500).json({ msg: err.message });
-    res
-      .status(500)
-      .json({
-        msg: "success",
-        txHash: "Return Time Out. Txn Hash will appear soon",
-      });
+    res.status(500).json({
+      msg: "success",
+      txHash: "Return Time Out. Txn Hash will appear soon",
+    });
   }
 };
 // exports.changePassword = async (req, res, next) => {
@@ -286,6 +284,19 @@ exports.withdrawal = async (req, res, next) => {
       .input("amount", amt)
       .input("txn", txn)
       .execute("sp_withdrawal");
+    res.status(200).json({ data: result.recordset });
+  } catch (err) {
+    throw err;
+  }
+};
+exports.withdrawal_update = async (req, res, next) => {
+  const withSl = req.body.withSl;
+  const txn = req.body.txn;
+  try {
+    const result = await new sql.Request()
+      .input("withSl", withSl)
+      .input("txn", txn)
+      .execute("update_withdrawal_txn");
     res.status(200).json({ data: "Success" });
   } catch (err) {
     throw err;
