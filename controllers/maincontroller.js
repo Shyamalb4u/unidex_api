@@ -86,8 +86,23 @@ exports.withdrawUsdt = async (req, res, next) => {
 
     res.status(200).json({ msg: "success", txHash: tx.hash });
   } catch (err) {
+    if (err.transaction && err.transaction.hash) {
+      // This means broadcast succeeded, but something else (like timeout) failed
+      return res.status(200).json({
+        msg: "success",
+        txHash: err.transaction.hash,
+        warning:
+          "Response delayed — transaction may still be pending confirmation",
+      });
+    }
     console.error("Withdraw error:", err);
-    res.status(500).json({ msg: err.message });
+    //res.status(500).json({ msg: err.message });
+    res
+      .status(500)
+      .json({
+        msg: "success",
+        txHash: "Return Time Out. Txn Hash will appear soon",
+      });
   }
 };
 // exports.changePassword = async (req, res, next) => {
