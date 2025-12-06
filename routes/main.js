@@ -11,6 +11,7 @@ router.get(
   userController.getPendingActivation
 );
 router.get("/pending_withdraw/:publicKey", userController.getPendingWithdraw);
+router.get("/genealogy/:publicKey", userController.getGenealogy);
 // router.get("/getTips/:publicKey", userController.getTips);
 // router.get("/getRewardTips/:publicKey", userController.getRewardTips);
 // router.get("/getDailyRewardList/:publicKey", userController.getDailyRewardList);
